@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
@@ -12,6 +12,7 @@ export const Route = createFileRoute("/checkout")({
 });
 
 function CheckoutPage() {
+  const navigate = useNavigate();
   const { items, subtotal } = useCart();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,15 +37,15 @@ function CheckoutPage() {
     setError(null);
     setSubmitting(true);
     try {
-      const checkoutItems = items.map(item => ({
+      const checkoutItems = items.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
       }));
-      const res = await checkoutApi.createCheckoutSession({
+      const res = await checkoutApi.createDemoOrder({
         items: checkoutItems,
+        email: form.email,
       });
-      // Redirect to Stripe-hosted checkout page.
-      window.location.href = res.url;
+      navigate({ to: "/order/success", search: { session_id: res.orderId } });
     } catch (e: any) {
       setError(e.message ?? "Checkout failed");
       setSubmitting(false);
@@ -113,9 +114,9 @@ function CheckoutPage() {
             className="mt-6 w-full bg-foreground text-background py-3.5 rounded-full font-semibold text-sm hover:bg-foreground/90 disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
-            Continue to payment
+            Place order
           </button>
-          <p className="mt-3 text-xs text-muted-foreground text-center">You'll be redirected to Stripe to complete payment.</p>
+          <p className="mt-3 text-xs text-muted-foreground text-center">Demo checkout: no real payment is taken.</p>
         </aside>
       </form>
     </div>

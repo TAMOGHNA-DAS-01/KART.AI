@@ -1,9 +1,9 @@
 const express = require('express');
-const { createCheckoutSession } = require('../controllers/checkoutController');
+const { createDemoOrder } = require('../controllers/checkoutController');
 const { optionalProtect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.post('/create-session', optionalProtect, createCheckoutSession);
+router.post('/demo-order', optionalProtect, createDemoOrder);
 
 module.exports = router;

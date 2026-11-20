@@ -19,6 +19,10 @@ const orderSchema = new mongoose.Schema({
     ref: 'User',
     default: null,
   },
+  email: {
+    type: String,
+    default: null,
+  },
   items: [orderItemSchema],
   totalAmount: {
     type: Number,
@@ -29,9 +33,14 @@ const orderSchema = new mongoose.Schema({
     enum: ['Pending', 'Paid', 'Failed'],
     default: 'Pending',
   },
+  paymentMethod: {
+    type: String,
+    default: 'demo',
+  },
+  // Kept for old Stripe orders; no longer required.
   stripeSessionId: {
     type: String,
-    required: true,
+    default: null,
   },
 }, { timestamps: true });
 

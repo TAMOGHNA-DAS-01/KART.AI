@@ -35,7 +35,7 @@ const handleChat = async (req, res) => {
 
     // 4. Stateless Generation - Avoiding session-related 500 errors
     const result = await client.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.8-flash",
       contents: [
         {
           role: "user",

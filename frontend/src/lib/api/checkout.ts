@@ -2,16 +2,17 @@ import { apiFetch } from "./client";
 
 export type CheckoutInput = {
   items: { productId: string; quantity: number }[];
+  email?: string;
 };
 
-export type CheckoutResponse = {
-  url: string;
+export type DemoOrderResponse = {
+  success: boolean;
+  orderId: string;
 };
 
-export function createCheckoutSession(input: CheckoutInput): Promise<CheckoutResponse> {
-  return apiFetch<CheckoutResponse>("/checkout/create-session", {
+export function createDemoOrder(input: CheckoutInput): Promise<DemoOrderResponse> {
+  return apiFetch<DemoOrderResponse>("/checkout/demo-order", {
     method: "POST",
     body: input,
-    auth: false,
   });
 }
