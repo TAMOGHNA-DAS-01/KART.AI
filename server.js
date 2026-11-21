@@ -22,17 +22,14 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:8080',
   'http://localhost:8081',
-  'http://localhost:5173',
-  'https://kart-ai.vercel.app',
+  'http://localhost:5173',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
   process.env.CLIENT_URL
 ].filter(Boolean);
 
 app.use(cors({
   origin: function (origin, callback) {
-    const isAllowed = !origin || 
-      allowedOrigins.includes(origin) || 
-      origin.endsWith('.vercel.app');
-    
+        const isAllowed = !origin || 
+      	allowedOrigins.includes(origin);
     if (isAllowed) {
       callback(null, true);
     } else {
